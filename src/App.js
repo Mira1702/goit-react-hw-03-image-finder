@@ -10,36 +10,51 @@ import './styles.css';
 class App extends Component {
   state = {
     hits: [],
-    page: 1
+    page: 1,
+    query: '',
+    isLoading: false
   };
-  componentDidMount() {
-    
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.query !== this.state.query) {
+      this.fetchHits();
+    }
   }
 
-  onChangeSearchQuery = searchQuery => {    
+  onChangeSearchQuery = searchQuery => {
+    this.setState({ query: searchQuery, page: 1, hits: [] });
+    this.fetchHits();    
+  }
+
+  fetchHits = () => {
     const key = '19787930-3152e5d62708cea03366e4b32';
-    const { page } = this.state;
-    const url = `https://pixabay.com/api/?q=${searchQuery}&page=${page}&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
+    const { page, query } = this.state;
+    const url = `https://pixabay.com/api/?q=${query}&page=${page}&key=${key}&image_type=photo&orientation=horizontal&per_page=12`
+    
+    this.setState({isLoading: true})
+    
     axios
       .get(url)
-      .then(response => {        
-        this.setState({
-          hits: response.data.hits,
-        })
-      });
-    
-  }
-  render() {
-    const { hits } = this.state;
-    return (
-      <div>
-        <Searchbar onSubmit={this.onChangeSearchQuery}/>
-        <ImageGallery hits={hits}/>
-      </div>
-    )
-    
+      .then(response => {
+        this.setState(prevState => ({
+          hits: [...prevState.hits, ...response.data.hits],
+          page: prevState.page + 1,
+        }));
+      })
+      .finally(() => this.setState({ isLoading: false }));
   }
 
+
+  render() {
+    const { hits, isLoading } = this.state;
+    return (
+      <div>
+        <Searchbar onSubmit={this.onChangeSearchQuery} />
+        {isLoading && <h1>Загружаем...</h1>}
+        <ImageGallery hits={hits} />
+        {hits.lenth > 0 && <button type="button" onClick={this.fetchHits}>Load more</button>}
+      </div>
+    )    
+  }
 }
 
 export default App;

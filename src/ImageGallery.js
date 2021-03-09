@@ -1,24 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ImageGalleryItem from './ImageGalleryItem';
 import './styles.css';
 
-class ImageGallery extends Component {
-    state = {
-        hits: []
-    }
-    render(hits) {
-        return (
-            <ul className="ImageGallery">
-                {hits.map(hit => (
-                    <ImageGalleryItem
-                        key={hit.id}
-                        url={hit.webformatURL}
-                        bigHit={hit.largeImageURL}
-                    />
-                ))}
-            </ul>
-        )
-    }
+// class ImageGallery extends Component {
+    
+//     render(hits) {
+//         return (
+//             <ul className="ImageGallery">
+//                 {hits.map(({id, webformatURL, largeImageURL}) => (
+//                     <ImageGalleryItem
+//                         key={id}
+//                         url={webformatURL}
+//                         bigHit={largeImageURL}
+//                     />
+//                 ))}
+//             </ul>
+//         )
+//     }
+// }
+
+const ImageGallery = ({ hits }) => {
+    <ul className="ImageGallery">
+        {hits.map(({ id, webformatURL, largeImageURL }) => (
+            <ImageGalleryItem
+                key={id}
+                url={webformatURL}
+                bigHit={largeImageURL}
+            />
+        ))}
+    </ul>
 }
 
 export default ImageGallery;
