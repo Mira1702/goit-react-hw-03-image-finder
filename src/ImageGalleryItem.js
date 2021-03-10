@@ -1,21 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './styles.css';
 
-// class ImageGalleryItem extends Component {
-    
-//     render() {
-//         return (
-//             <li className="ImageGalleryItem">
-//               <img src="{{webformatURL}}" alt="photo" width="260" data-image="{{largeImageURL}}" className="ImageGalleryItem-image" />
-//             </li>
-//         )
-//     }
-// }
+const ImageGalleryItem = ({ url, bigHit }) => {
+    return (
+        <li className="ImageGalleryItem">
+            <img src={url} alt="photo" width="260" data-image={bigHit} className="ImageGalleryItem-image" />
+        </li>
+    )
+};
 
-const ImageGalleryItem = ({url, bigHit}) => {
-    <li className="ImageGalleryItem">
-        <img src={url} alt="photo" width="260" data-image={bigHit} className="ImageGalleryItem-image" />
-    </li>
-}
+ImageGalleryItem.propTypes = {
+    url: PropTypes.string,
+    bigHit: PropTypes.string,
+};
 
 export default ImageGalleryItem;

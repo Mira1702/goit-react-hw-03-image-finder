@@ -21,8 +21,7 @@ class App extends Component {
   }
 
   onChangeSearchQuery = searchQuery => {
-    this.setState({ query: searchQuery, page: 1, hits: [] });
-    this.fetchHits();    
+    this.setState({ query: searchQuery, page: 1, hits: [] })      
   }
 
   fetchHits = () => {
@@ -40,6 +39,7 @@ class App extends Component {
           page: prevState.page + 1,
         }));
       })
+      .catch(error => this.setState({ error }))
       .finally(() => this.setState({ isLoading: false }));
   }
 
@@ -50,8 +50,10 @@ class App extends Component {
       <div>
         <Searchbar onSubmit={this.onChangeSearchQuery} />
         {isLoading && <h1>Загружаем...</h1>}
-        <ImageGallery hits={hits} />
-        {hits.lenth > 0 && <button type="button" onClick={this.fetchHits}>Load more</button>}
+        {hits.length > 0 && (
+          <ImageGallery hits={hits} />
+        )}
+        {hits.length > 0 && <button type="button" onClick={this.fetchHits}>Load more</button>}
       </div>
     )    
   }
