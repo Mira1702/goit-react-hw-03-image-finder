@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
+import Button from './Button';
 import './styles.css';
 
 // axios.defaults.headers.common['Authorization'] = 'Bearer 19787930-3152e5d62708cea03366e4b32';
@@ -17,11 +18,19 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query) {
       this.fetchHits();
+      this.scrollTo();
     }
   }
 
   onChangeSearchQuery = searchQuery => {
     this.setState({ query: searchQuery, page: 1, hits: [] })      
+  }
+
+  scrollTo = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
   }
 
   fetchHits = () => {
@@ -47,13 +56,13 @@ class App extends Component {
   render() {
     const { hits, isLoading } = this.state;
     return (
-      <div>
+      <div className="App">
         <Searchbar onSubmit={this.onChangeSearchQuery} />
         {isLoading && <h1>Загружаем...</h1>}
         {hits.length > 0 && (
           <ImageGallery hits={hits} />
         )}
-        {hits.length > 0 && <button type="button" onClick={this.fetchHits}>Load more</button>}
+        {hits.length > 0 && <Button onClick={this.fetchHits} />}
       </div>
     )    
   }
