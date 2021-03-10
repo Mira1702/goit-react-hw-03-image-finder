@@ -3,6 +3,7 @@ import axios from 'axios';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Button from './Button';
+import SpinnerLoader from './SpinnerLoader';
 import './styles.css';
 
 // axios.defaults.headers.common['Authorization'] = 'Bearer 19787930-3152e5d62708cea03366e4b32';
@@ -58,10 +59,8 @@ class App extends Component {
     return (
       <div className="App">
         <Searchbar onSubmit={this.onChangeSearchQuery} />
-        {isLoading && <h1>Загружаем...</h1>}
-        {hits.length > 0 && (
-          <ImageGallery hits={hits} />
-        )}
+        {isLoading && <SpinnerLoader />}
+        {hits.length > 0 && (<ImageGallery hits={hits} />)}
         {hits.length > 0 && <Button onClick={this.fetchHits} />}
       </div>
     )    
