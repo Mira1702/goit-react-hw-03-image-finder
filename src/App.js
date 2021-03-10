@@ -4,6 +4,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Button from './Button';
 import SpinnerLoader from './SpinnerLoader';
+import Modal from './Modal';
 import './styles.css';
 
 // axios.defaults.headers.common['Authorization'] = 'Bearer 19787930-3152e5d62708cea03366e4b32';
