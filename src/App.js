@@ -4,8 +4,9 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Button from './Button';
 import SpinnerLoader from './SpinnerLoader';
-import Modal from './Modal';
+import LightboxExample from './Modal';
 import './styles.css';
+import ImageGalleryItem from './ImageGalleryItem';
 
 // axios.defaults.headers.common['Authorization'] = 'Bearer 19787930-3152e5d62708cea03366e4b32';
 
@@ -15,7 +16,8 @@ class App extends Component {
     hits: [],
     page: 1,
     query: '',
-    isLoading: false
+    isLoading: false,
+    showModal: false
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query) {
@@ -54,15 +56,24 @@ class App extends Component {
       .finally(() => this.setState({ isLoading: false }));
   }
 
+  modalOpen = () => {
+    this.setState(({showModal}) => ({
+      showModal: !showModal
+    }))
+  }
+
 
   render() {
-    const { hits, isLoading } = this.state;
+    const { hits, isLoading, showModal } = this.state;
     return (
       <div className="App">
         <Searchbar onSubmit={this.onChangeSearchQuery} />
         {isLoading && <SpinnerLoader />}
-        {hits.length > 0 && (<ImageGallery hits={hits} />)}
-        {hits.length > 0 && <Button onClick={this.fetchHits} />}
+        {hits.length > 0 && (<ImageGallery hits={hits} onClick={this.modalOpen}/>)}
+        {hits.length > 0 && <Button onClick={this.fetchHits} />}        
+        {showModal && <LightboxExample >
+          <ImageGalleryItem hits={hits}/>
+        </LightboxExample>}
       </div>
     )    
   }
