@@ -4,7 +4,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Button from './Button';
 import SpinnerLoader from './SpinnerLoader';
-import LightboxExample from './Modal';
+import Modal from './Modal';
 import './styles.css';
 import ImageGalleryItem from './ImageGalleryItem';
 
@@ -71,9 +71,11 @@ class App extends Component {
         {isLoading && <SpinnerLoader />}
         {hits.length > 0 && (<ImageGallery hits={hits} onClick={this.modalOpen}/>)}
         {hits.length > 0 && <Button onClick={this.fetchHits} />}        
-        {showModal && <LightboxExample >
-          <ImageGalleryItem hits={hits}/>
-        </LightboxExample>}
+        {showModal &&
+          <Modal >
+            <ImageGalleryItem hits={hits} />
+          </Modal>
+        }
       </div>
     )    
   }
