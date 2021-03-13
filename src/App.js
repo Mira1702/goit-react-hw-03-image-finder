@@ -5,8 +5,9 @@ import ImageGallery from './ImageGallery';
 import Button from './Button';
 import SpinnerLoader from './SpinnerLoader';
 import Modal from './Modal';
+import BigHit from './BigHit';
 import './styles.css';
-import ImageGalleryItem from './ImageGalleryItem';
+
 
 // axios.defaults.headers.common['Authorization'] = 'Bearer 19787930-3152e5d62708cea03366e4b32';
 
@@ -17,7 +18,8 @@ class App extends Component {
     page: 1,
     query: '',
     isLoading: false,
-    showModal: false
+    showModal: false,
+    modalImgUrl: ''
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query) {
@@ -56,26 +58,27 @@ class App extends Component {
       .finally(() => this.setState({ isLoading: false }));
   }
 
-  modalOpen = () => {
-    this.setState(({showModal}) => ({
-      showModal: !showModal
-    }))
-  }
+  modalOpen = (url = '') => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      modalImgUrl: url,
+    }));
+  };
 
 
   render() {
-    const { hits, isLoading, showModal } = this.state;
+    const { hits, modalImgUrl, isLoading, showModal } = this.state;
     return (
       <div className="App">
         <Searchbar onSubmit={this.onChangeSearchQuery} />
         {isLoading && <SpinnerLoader />}
         {hits.length > 0 && (<ImageGallery hits={hits} onClick={this.modalOpen}/>)}
         {hits.length > 0 && <Button onClick={this.fetchHits} />}        
-        {showModal &&
-          <Modal >
-            <ImageGalleryItem hits={hits} />
+        {showModal && (
+          <Modal onClick={this.modalOpen} onClose={this.modalOpen}>          
+            <BigHit modalImgUrl={modalImgUrl} hits={hits} />
           </Modal>
-        }
+        )}
       </div>
     )    
   }
