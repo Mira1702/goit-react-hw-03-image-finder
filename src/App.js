@@ -77,6 +77,7 @@ class App extends Component {
         {showModal && (
           <Modal onClick={this.modalOpen} onClose={this.modalOpen}>          
             <BigHit modalImgUrl={modalImgUrl} hits={hits} />
+            <h1>HELLO</h1>
           </Modal>
         )}
       </div>
