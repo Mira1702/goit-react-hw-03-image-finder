@@ -5,7 +5,6 @@ import ImageGallery from './ImageGallery';
 import Button from './Button';
 import SpinnerLoader from './SpinnerLoader';
 import Modal from './Modal';
-import BigHit from './BigHit';
 import './styles.css';
 
 
@@ -19,7 +18,7 @@ class App extends Component {
     query: '',
     isLoading: false,
     showModal: false,
-    modalImgUrl: ''
+    modalImg: ''
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query) {
@@ -58,26 +57,33 @@ class App extends Component {
       .finally(() => this.setState({ isLoading: false }));
   }
 
-  modalOpen = (url = '') => {
+  modalOpen = () => {
     this.setState(({ showModal }) => ({
-      showModal: !showModal,
-      modalImgUrl: url,
+      showModal: !showModal      
     }));
   };
 
+  onGalleryClick = event => {
+    event.preventDefault();
+    if (event.target.nodeName !== 'IMG') {
+      return;
+    }
+    this.setState({ modalImg: event.target });
+    this.modalOpen();
+  };
+  
 
   render() {
-    const { hits, modalImgUrl, isLoading, showModal } = this.state;
+    const { hits, modalImg, isLoading, showModal } = this.state;
     return (
       <div className="App">
         <Searchbar onSubmit={this.onChangeSearchQuery} />
         {isLoading && <SpinnerLoader />}
-        {hits.length > 0 && (<ImageGallery hits={hits} onClick={this.modalOpen}/>)}
+        {hits.length > 0 && (<ImageGallery hits={hits} onClick={this.onGalleryClick}/>)}
         {hits.length > 0 && <Button onClick={this.fetchHits} />}        
         {showModal && (
-          <Modal onClick={this.modalOpen} onClose={this.modalOpen}>          
-            <BigHit modalImgUrl={modalImgUrl} hits={hits} />
-            <h1>HELLO</h1>
+          <Modal modalImg={modalImg} onClose={this.modalOpen}>
+            <img src={modalImg.dataset.source} alt={modalImg.alt} />             
           </Modal>
         )}
       </div>

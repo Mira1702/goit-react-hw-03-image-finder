@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const BigHit = ({ hits, modalImgUrl }) => {    
+const BigHit = ({ hits, modalImg }) => {    
     const modalImgUrlArray = hits.map(hits => hits.largeImageURL);
-    const index = modalImgUrlArray.indexOf(modalImgUrl);
+    const index = modalImgUrlArray.indexOf(modalImg);
     const [currentIndex] = useState(index);
     const currentImgUrl = hits[currentIndex];
 
