@@ -84,7 +84,7 @@ class App extends Component {
         {hits.length > 0 && <Button onClick={this.fetchHits} />}        
         {showModal && (
           <Modal modalImg={modalImg} onClose={this.modalOpen}>
-            <img src={modalImg} />             
+            <img src={modalImg.dataset.image} />             
           </Modal>
         )}
       </div>
