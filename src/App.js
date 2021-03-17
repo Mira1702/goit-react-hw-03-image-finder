@@ -57,7 +57,7 @@ class App extends Component {
       .finally(() => this.setState({ isLoading: false }));
   }
 
-  modalOpen = () => {
+  modalOpen = () => {    
     this.setState(({ showModal }) => ({
       showModal: !showModal      
     }));
@@ -71,7 +71,8 @@ class App extends Component {
     this.setState({ modalImg: event.target });
     this.modalOpen();
   };
-  
+
+    
 
   render() {
     const { hits, modalImg, isLoading, showModal } = this.state;
