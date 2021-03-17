@@ -63,7 +63,7 @@ class App extends Component {
     }));
   };
 
-  onGalleryClick = event => {
+  hitOpen = event => {
     event.preventDefault();
     if (event.target.nodeName !== 'IMG') {
       return;
@@ -80,11 +80,11 @@ class App extends Component {
       <div className="App">
         <Searchbar onSubmit={this.onChangeSearchQuery} />
         {isLoading && <SpinnerLoader />}
-        {hits.length > 0 && (<ImageGallery hits={hits} onClick={this.onGalleryClick}/>)}
+        {hits.length > 0 && (<ImageGallery hits={hits} onClick={this.hitOpen}/>)}
         {hits.length > 0 && <Button onClick={this.fetchHits} />}        
         {showModal && (
           <Modal modalImg={modalImg} onClose={this.modalOpen}>
-            <img src={modalImg.dataset.source} alt={modalImg.alt} />             
+            <img src={modalImg} />             
           </Modal>
         )}
       </div>
