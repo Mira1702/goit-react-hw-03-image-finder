@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './styles.css';
+import styles from './ImageGalleryItem.module.css';
 
 const ImageGalleryItem = ({ url, bigHit, onClick }) => {
     return (
-        <li className="ImageGalleryItem">
+        <li className={styles.ImageGalleryItem}>
             <img
                 src={url}
                 alt="photo"
                 width="260"
                 data-image={bigHit}
-                className="ImageGalleryItem-image"
+                className={styles.ImageGalleryItemImage}
                 onClick={onClick}
             />
         </li>

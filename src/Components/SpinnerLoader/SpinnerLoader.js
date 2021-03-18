@@ -1,10 +1,10 @@
 import React from 'react';
 import Loader from "react-loader-spinner";
-import './styles.css';
+import styles from './SpinnerLoader.module.css';
 
 const SpinnerLoader = () => {
     return (
-        <div className="Loader">
+        <div className={styles.Loader}>
             <Loader
                 type="Circles"
                 color="#00BFFF"
